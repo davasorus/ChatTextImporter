@@ -109,7 +109,7 @@ namespace ChatTextImport
                         string VIP = inputFile.ReadLine().TrimStart('V', 'P', ':', ' ');
                         string Bit = inputFile.ReadLine().TrimStart('B', 't', ' ', ':');
                         string BitNumber = inputFile.ReadLine().TrimStart('B', 'N', ':', ' ', '/', 't', 's');
-                        string Found = inputFile.ReadLine().TrimStart('F', 'N', ':', ' ');
+                        string Found = inputFile.ReadLine().TrimStart('f', 'N', ':', ' ');
 
                         Task Task1 = Task.Factory.StartNew(() => InsertName(name, mod, sub, SubTime, VIP, Bit, BitNumber, Found));
 
@@ -221,7 +221,7 @@ namespace ChatTextImport
                      new SqlParameter("@Is_VIP", SqlDbType.NVarChar) {Value = VIP},
                      new SqlParameter("@Given_Bits", SqlDbType.NVarChar) {Value = Bit},
                      new SqlParameter("@Bit_Amount", SqlDbType.Int) {Value = BitNumber},
-                     new SqlParameter("@@Founder", SqlDbType.NVarChar) {Value = Found}
+                     new SqlParameter("@Founder", SqlDbType.NVarChar) {Value = Found}
                 };
                 cmd.Parameters.AddRange(prm.ToArray());
 

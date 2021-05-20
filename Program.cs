@@ -106,8 +106,11 @@ namespace ChatTextImport
                         string mod = inputFile.ReadLine().TrimStart('I', 'M', ':', ' ');
                         string sub = inputFile.ReadLine().TrimStart('I', 'S', ':', ' ');
                         string SubTime = inputFile.ReadLine().TrimStart('S', 'L', ':', ' ', '/');
+                        string VIP = inputFile.ReadLine().TrimStart('V', 'p', ':', ' ');
+                        string Bit = inputFile.ReadLine().TrimStart('B', 'T', ' ');
+                        string BitNumber = inputFile.ReadLine().TrimStart('B', 'N', ':', ' ', '/', 't', 's');
 
-                        Task Task1 = Task.Factory.StartNew(() => InsertName(name, mod, sub, SubTime));
+                        Task Task1 = Task.Factory.StartNew(() => InsertName(name, mod, sub, SubTime, VIP, Bit, BitNumber));
 
                         Task Task2 = Task.Factory.StartNew(() => InsertMessage(message));
 
@@ -194,7 +197,7 @@ namespace ChatTextImport
         }
 
         //will insert user name into local db
-        private void InsertName(string Name, string Mod, string Sub, string SubTime)
+        private void InsertName(string Name, string Mod, string Sub, string SubTime, string VIP, string Bit, string BitNumber)
         {
             string connetionString;
             SqlDataReader rdr = null;
@@ -214,6 +217,9 @@ namespace ChatTextImport
                      new SqlParameter("@Is_Subscribed", SqlDbType.NVarChar) {Value = Sub},
                      new SqlParameter("@Sub_Length", SqlDbType.Int) {Value = SubTime},
                      new SqlParameter("@Is_Moderator", SqlDbType.NVarChar) {Value = Mod},
+                     new SqlParameter("@Is_VIP", SqlDbType.NVarChar) {Value = VIP},
+                     new SqlParameter("@Given_Bits", SqlDbType.NVarChar) {Value = Bit},
+                     new SqlParameter("@Bit_Amount", SqlDbType.Int) {Value = BitNumber}
                 };
                 cmd.Parameters.AddRange(prm.ToArray());
 

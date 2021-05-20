@@ -106,8 +106,8 @@ namespace ChatTextImport
                         string mod = inputFile.ReadLine().TrimStart('I', 'M', ':', ' ');
                         string sub = inputFile.ReadLine().TrimStart('I', 'S', ':', ' ');
                         string SubTime = inputFile.ReadLine().TrimStart('S', 'L', ':', ' ', '/');
-                        string VIP = inputFile.ReadLine().TrimStart('V', 'p', ':', ' ');
-                        string Bit = inputFile.ReadLine().TrimStart('B', 'T', ' ');
+                        string VIP = inputFile.ReadLine().TrimStart('V', 'P', ':', ' ');
+                        string Bit = inputFile.ReadLine().TrimStart('B', 't', ' ', ':');
                         string BitNumber = inputFile.ReadLine().TrimStart('B', 'N', ':', ' ', '/', 't', 's');
 
                         Task Task1 = Task.Factory.StartNew(() => InsertName(name, mod, sub, SubTime, VIP, Bit, BitNumber));

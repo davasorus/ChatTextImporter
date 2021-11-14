@@ -115,9 +115,9 @@ namespace ChatTextImport
 
                         Task Task2 = Task.Factory.StartNew(() => InsertMessage(message));
 
-                        Task Task3 = Task.Factory.StartNew(() => InsertNameandMessage(name, message));
+                        Task.WaitAll(Task1, Task2);
 
-                        Task.WaitAll(Task1, Task2, Task3);
+                        InsertNameandMessage(name, message);
 
                         return;
                     }
@@ -169,7 +169,7 @@ namespace ChatTextImport
             {
                 SqlCommand cmd = new SqlCommand("InsertUserMessage", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@UserMessage", message));
+                cmd.Parameters.Add(new SqlParameter("@User_Message", message));
 
                 rdr = cmd.ExecuteReader();
                 rdr.Close();
@@ -181,7 +181,7 @@ namespace ChatTextImport
                     string Message = "BLANK VALUE";
                     SqlCommand cmd = new SqlCommand("InsertUserMessage", cnn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@UserMessage", Message));
+                    cmd.Parameters.Add(new SqlParameter("@User_Message", Message));
 
                     rdr = cmd.ExecuteReader();
                     rdr.Close();
@@ -256,9 +256,10 @@ namespace ChatTextImport
 
                 List<SqlParameter> prm = new List<SqlParameter>()
                 {
-                     new SqlParameter("@UserName", SqlDbType.NVarChar) {Value = Name},
-                     new SqlParameter("@UserMessage", SqlDbType.NVarChar) {Value = Message},
-                     //new SqlParameter("@variable3", SqlDbType.DateTime) {Value = myValue3},
+                     new SqlParameter("@User_Name", SqlDbType.NVarChar) {Value = Name},
+                     new SqlParameter("@User_Message", SqlDbType.NVarChar) {Value = Message},
+                     new SqlParameter("@User_ID", SqlDbType.Int) {Value = 0},
+                     new SqlParameter("@Message_ID", SqlDbType.Int) {Value = 0}
                 };
                 cmd.Parameters.AddRange(prm.ToArray());
 

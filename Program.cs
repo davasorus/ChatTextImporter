@@ -26,7 +26,8 @@ namespace ChatTextImport
                 using (StreamWriter file = new StreamWriter(("ChatTextImport Log.txt"), true))
                 {
                     file.WriteLine(LogEntry);
-                    Task Task4 = Task.Factory.StartNew(() => program.LogEntryWriter(LogEntry));
+
+                    
                 }
             }
             else
@@ -94,7 +95,7 @@ namespace ChatTextImport
         }
 
         //searches through files for data on the db data
-        private void SearchFileForName(string File)
+        private async void SearchFileForName(string File)
         {
             string filePath = Path.Combine(Path.GetDirectoryName(File), Path.GetFileName(File));
 
@@ -121,7 +122,7 @@ namespace ChatTextImport
 
                         Task Task2 = Task.Factory.StartNew(() => InsertMessage(message));
 
-                        Task.WaitAll(Task1, Task2);
+                        await Task.WhenAll(Task1, Task2);
 
                         InsertNameandMessage(name, message);
 
@@ -341,7 +342,7 @@ namespace ChatTextImport
                 {
                     text_writer.WriteLine(LogEntry);
 
-                    Task task1 = Task.Factory.StartNew(() => Console.WriteLine(LogEntry));
+                    
                 }
             }
             catch (Exception e)

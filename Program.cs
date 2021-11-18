@@ -26,8 +26,6 @@ namespace ChatTextImport
                 using (StreamWriter file = new StreamWriter(("ChatTextImport Log.txt"), true))
                 {
                     file.WriteLine(LogEntry);
-
-                    
                 }
             }
             else
@@ -341,8 +339,6 @@ namespace ChatTextImport
                 using (TextWriter text_writer = new StreamWriter(("ChatTextImport Log.txt"), true))
                 {
                     text_writer.WriteLine(LogEntry);
-
-                    
                 }
             }
             catch (Exception e)

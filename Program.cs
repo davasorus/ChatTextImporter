@@ -9,12 +9,16 @@ namespace ChatTextImport
 {
     internal class Program
     {
+        public string machineName { get; set; }
+
         //main entrance to application
         private static void Main(string[] args)
         {
             string LogEntry = @"----------- Start of log file" + " " + DateTime.Now + "-----------";
 
             Program program = new Program();
+
+            program.machineName = Environment.MachineName;
 
             //this will put the current date of application start per run. This allows for easier readability.
             if (File.Exists("ChatTextImport Log.txt"))
@@ -39,6 +43,8 @@ namespace ChatTextImport
             program.MoveFiles(@"E:\Recordings\TwitchChatIngest\", @"E:\Recordings\TwitchChatDelete\");
             program.DeleteFiles(@"E:\Recordings\TwitchChatDelete\");
         }
+
+        #region Folder Search
 
         //searches through the predefined folder for files that are not empty
         public void SearchFolder(string location)
@@ -155,13 +161,17 @@ namespace ChatTextImport
             Console.ReadLine();
         }
 
+        #endregion Folder Search
+
+        #region SQL Insert
+
         //will insert user message into local db
         private void InsertMessage(string message)
         {
             string connetionString;
             SqlDataReader rdr = null;
             SqlConnection cnn;
-            connetionString = @"Data Source=LAZERUS\SQLEXPRESS;Initial Catalog=STREAMINGDB;Integrated Security=SSPI;";
+            connetionString = @"Data Source=" + machineName + "\\SQLEXPRESS;Initial Catalog=STREAMINGDB;Integrated Security=SSPI;";
             cnn = new SqlConnection(connetionString);
             cnn.Open();
 
@@ -203,7 +213,7 @@ namespace ChatTextImport
             string connetionString;
             SqlDataReader rdr = null;
             SqlConnection cnn;
-            connetionString = @"Data Source=LAZERUS\SQLEXPRESS;Initial Catalog=STREAMINGDB;Integrated Security=SSPI;";
+            connetionString = @"Data Source=" + machineName + "\\SQLEXPRESS;Initial Catalog=STREAMINGDB;Integrated Security=SSPI;";
             cnn = new SqlConnection(connetionString);
             cnn.Open();
 
@@ -245,7 +255,7 @@ namespace ChatTextImport
             string connetionString;
             SqlDataReader rdr = null;
             SqlConnection cnn;
-            connetionString = @"Data Source=LAZERUS\SQLEXPRESS;Initial Catalog=STREAMINGDB;Integrated Security=SSPI;";
+            connetionString = @"Data Source=" + machineName + "\\SQLEXPRESS;Initial Catalog=STREAMINGDB;Integrated Security=SSPI;";
             cnn = new SqlConnection(connetionString);
             cnn.Open();
 
@@ -276,6 +286,10 @@ namespace ChatTextImport
 
             cnn.Close();
         }
+
+        #endregion SQL Insert
+
+        #region File Manipulation
 
         //will move files from one folder to another
         private void MoveFiles(string Start, string End)
@@ -314,6 +328,10 @@ namespace ChatTextImport
             }
         }
 
+        #endregion File Manipulation
+
+        #region Logging
+
         //This will write to a log file to keep between runs
         private void LogEntryWriter(string LogEntry)
         {
@@ -322,6 +340,8 @@ namespace ChatTextImport
                 using (TextWriter text_writer = new StreamWriter(("ChatTextImport Log.txt"), true))
                 {
                     text_writer.WriteLine(LogEntry);
+
+                    Task task1 = Task.Factory.StartNew(() => Console.WriteLine(LogEntry));
                 }
             }
             catch (Exception e)
@@ -329,5 +349,7 @@ namespace ChatTextImport
                 LogEntryWriter(LogEntry);
             }
         }
+
+        #endregion Logging
     }
 }

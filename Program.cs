@@ -52,13 +52,13 @@ namespace ChatTextImport
             {
                 if (new FileInfo(file).Length == 0)
                 {
-                    Task Task4 = Task.Factory.StartNew(() => MoveFiles(Path.GetDirectoryName(file), @"E:\Recordings\TwitchChatDelete\"));
+                    MoveFiles(Path.GetDirectoryName(file), @"E:\Recordings\TwitchChatDelete\");
 
                     string LogEntry = DateTime.Now + " " + file + " was moved because it was empty";
 
                     LogEntryWriter(LogEntry);
 
-                    Task.WaitAll(Task4);
+                    
                 }
                 else
                 {
@@ -116,11 +116,11 @@ namespace ChatTextImport
                         string BitNumber = inputFile.ReadLine().TrimStart('B', 'N', ':', ' ', '/', 't', 's');
                         string Found = inputFile.ReadLine().TrimStart('f', 'N', ':', ' ');
 
-                        Task Task1 = Task.Factory.StartNew(() => InsertName(name, mod, sub, SubTime, VIP, Bit, BitNumber, Found));
+                        InsertName(name, mod, sub, SubTime, VIP, Bit, BitNumber, Found);
 
-                        Task Task2 = Task.Factory.StartNew(() => InsertMessage(message));
+                        InsertMessage(message);
 
-                        await Task.WhenAll(Task1, Task2);
+                        //Task.WaitAll(Task1, Task2);
 
                         InsertNameandMessage(name, message);
 

@@ -120,8 +120,6 @@ namespace ChatTextImport
 
                         InsertMessage(message);
 
-                        //Task.WaitAll(Task1, Task2);
-
                         InsertNameandMessage(name, message);
 
                         return;

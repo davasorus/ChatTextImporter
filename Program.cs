@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChatTextImport
 {
-    internal class Program
+    class Program
     {
         public string machineName { get; set; }
 
